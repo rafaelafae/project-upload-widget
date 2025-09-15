@@ -1,7 +1,7 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { getUploads } from '@/app/functions/get-uploads'
-import { unwrapEither } from '@/shared/either'
+import { unwrapEither } from '@/infra/shared/either'
 
 export const getUploadsRoute: FastifyPluginAsyncZod = async server => {
   server.get(

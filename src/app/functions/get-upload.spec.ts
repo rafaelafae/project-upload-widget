@@ -1,9 +1,9 @@
 import { randomUUID } from 'node:crypto'
+import dayjs from 'dayjs'
 import { describe, expect, it } from 'vitest'
-import { isRight, unwrapEither } from '@/shared/either'
+import { isRight, unwrapEither } from '@/infra/shared/either'
 import { makeUpload } from '@/test/factories/make.upload'
 import { getUploads } from './get-uploads'
-import dayjs from 'dayjs'
 
 describe('get uploads', () => {
   it('should be able to get the uploads', async () => {
@@ -67,34 +67,34 @@ describe('get uploads', () => {
     ])
   })
 
-    it('should be able to get sorted uploads', async () => {
+  it('should be able to get sorted uploads', async () => {
     const namePattern = randomUUID()
 
     const upload1 = await makeUpload({
-       name: `${namePattern}.webp`, 
-       createdAt: new Date()
-      })
+      name: `${namePattern}.webp`,
+      createdAt: new Date(),
+    })
     const upload2 = await makeUpload({
-       name: `${namePattern}.webp` ,
-       createdAt: dayjs().subtract(1, 'day').toDate()
-      })
+      name: `${namePattern}.webp`,
+      createdAt: dayjs().subtract(1, 'day').toDate(),
+    })
     const upload3 = await makeUpload({
-       name: `${namePattern}.webp` ,
-       createdAt: dayjs().subtract(2, 'day').toDate()
-      })
+      name: `${namePattern}.webp`,
+      createdAt: dayjs().subtract(2, 'day').toDate(),
+    })
     const upload4 = await makeUpload({
-       name: `${namePattern}.webp` ,
-       createdAt: dayjs().subtract(3, 'day').toDate()
-      })
+      name: `${namePattern}.webp`,
+      createdAt: dayjs().subtract(3, 'day').toDate(),
+    })
     const upload5 = await makeUpload({
-       name: `${namePattern}.webp`,
-       createdAt: dayjs().subtract(4, 'day').toDate()
-      })
+      name: `${namePattern}.webp`,
+      createdAt: dayjs().subtract(4, 'day').toDate(),
+    })
 
     let sut = await getUploads({
       searchQuery: namePattern,
       sortBy: 'createdAt',
-      sortDirection: 'desc'
+      sortDirection: 'desc',
     })
 
     expect(isRight(sut)).toBe(true)
@@ -110,7 +110,7 @@ describe('get uploads', () => {
     sut = await getUploads({
       searchQuery: namePattern,
       sortBy: 'createdAt',
-      sortDirection: 'asc'
+      sortDirection: 'asc',
     })
 
     expect(isRight(sut)).toBe(true)

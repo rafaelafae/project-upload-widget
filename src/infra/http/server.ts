@@ -8,8 +8,8 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-
 import { env } from '@/env'
+import { exportUploadsRoute } from './routes/export-uploads'
 import { getUploadsRoute } from './routes/get-uploads'
 import { uploadImageRoute } from './routes/upload-image'
 import { transformSwaggerSchema } from './transform-swagger-schema'
@@ -26,8 +26,7 @@ server.setErrorHandler((error, _request, reply) => {
       .send({ message: 'Validation error', issues: error.validation })
   }
 
-  // Envia o erro para algum serviço de monitoramento (Datadog, Sentry, Newrelic)
-
+  // Envia o erro p/ alguma ferramenta de observabilidade (Sentry/DataDog/Grafana/OTel)
   console.error(error)
 
   return reply.status(500).send({ message: 'Internal server error' })
@@ -44,7 +43,7 @@ server.register(fastifySwagger, {
       version: '1.0.0',
     },
   },
-  transform: transformSwaggerSchema, // função que converte a estrutura da rota para a estrutura do swagger
+  transform: transformSwaggerSchema,
 })
 
 server.register(fastifySwaggerUi, {
@@ -52,6 +51,7 @@ server.register(fastifySwaggerUi, {
 })
 
 server.register(uploadImageRoute)
+server.register(exportUploadsRoute)
 server.register(getUploadsRoute)
 
 console.log(env.DATABASE_URL)

@@ -2,7 +2,7 @@ import { asc, count, desc, ilike } from 'drizzle-orm'
 import { z } from 'zod'
 import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
-import { type Either, makeRight } from '@/shared/either'
+import { type Either, makeRight } from '@/infra/shared/either'
 
 const getUploadsInput = z.object({
   // Define o esquema de validação para os parâmetros de entrada da função getUploads
