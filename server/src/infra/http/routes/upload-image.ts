@@ -22,7 +22,7 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async server => {
       // Função para tratar a requisição
       const uploadedFile = await request.file({
         // Pega o arquivo enviado na requisição
-        limits: { fileSize: 1024 * 1024 * 2 },
+        limits: { fileSize: 1024 * 1024 * 4 },
       })
 
       if (!uploadedFile) {
@@ -41,7 +41,7 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async server => {
         // Se o arquivo for maior que o limite, retorna erro
         return reply
           .status(400)
-          .send({ message: 'File size limit exceeded. Max file size is 2MB.' })
+          .send({ message: 'File size limit exceeded. Max file size is 4MB.' })
       }
 
       if (isRight(result)) {
@@ -53,7 +53,7 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async server => {
       const error = unwrapEither(result) // Desembrulha o erro
 
       switch (
-        error.constructor.name // Trata o erro
+      error.constructor.name // Trata o erro
       ) {
         case 'InvalidFileFormat':
           return reply.status(400).send({ message: error.message })
