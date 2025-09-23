@@ -1,15 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-@import "tailwindcss";
+@import "tailwindcss" important;
+
+@property --border-angle {
+		inherits: false;
+		initial-value: 0deg;
+		syntax: "<angle>";
+}
+
+@keyframes border-spin{
+	to { 
+		--border-angle: 360deg;
+	}
+}
 
 @theme {
 	--font-family-sans: 'Inter', 'sans-serif';
-    --text-xxs: 0.625rem;
-    --shadow-shape: 0px 8px 8px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.1), 0px 2px 2px rgba(0, 0, 0, 0.1), 0px 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(255, 255, 255, 0.03), inset 0px 1px 0px rgba(255, 255, 255, 0.03);
-    --shadow-shape-content: 0px 0px 0px 1px rgba(0, 0, 0, 0.25),
-    --opacity: 2: 0.02;
+	--text-xxs: 0.625rem;
+	--shadow-shape: 0px 8px 8px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.1), 0px 2px 2px rgba(0, 0, 0, 0.1), 0px 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(255, 255, 255, 0.03), inset 0px 1px 0px rgba(255, 255, 255, 0.03);
+	--shadow-shape-content: 0px 0px 0px 1px rgba(0, 0, 0, 0.25),
+	--opacity: 2: 0.02;
+	--animate-border-spin: border-spin 2s linear infinite;
+
+}
+
+@utility border-gradient{
+    border: 1px solid transparent;
+    background:
+			linear-gradient(45deg, #09090B, theme(colors.zinc.900) 50%, #09090B) padding-box,
+			conic-gradient(from var(--border-angle), theme(colors.zinc.700/.48) 80%, theme(colors.indigo.500) 86%, theme(colors.indigo.300) 90%, theme(colors.indigo.500) 94%, theme(colors.zinc.600/.48)) border-box;
 }
 
 body {
-    font-family: theme('font-family-sans');
+	font-family: theme('font-family-sans');
 }
