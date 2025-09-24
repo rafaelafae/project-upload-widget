@@ -23,7 +23,8 @@
 			"quoteStyle": "single",
 			"indentStyle": "tab",
 			"indentWidth": 2,
-			"semicolons": "asNeeded"
+			"semicolons": "asNeeded",
+			"trailingCommas": "es5"
 		}
 	},
 	"html": {
