@@ -48,8 +48,18 @@ export function UploadWidgetUploadItem({
 
 					<span>
 						{/* File remaing size */}
-						300KB
-						<span className="text-green-400 ml-1">-94%</span>
+						{formatBytes(upload.compressedSizeInBytes ?? 0)}
+						{upload.compressedSizeInBytes && (
+							<span className="text-green-400 ml-1">
+								-
+								{Math.round(
+									((upload.originalSizeInBytes - upload.compressedSizeInBytes) *
+										100) /
+										upload.originalSizeInBytes
+								)}
+								%
+							</span>
+						)}
 					</span>
 					<div className="size-1 rounded-full bg-zinc-400" />
 					{/* File remaing uploading percentage */}
@@ -83,9 +93,15 @@ export function UploadWidgetUploadItem({
 
 			<div className="absolute top-2.5 right-2.5 flex items-center gap-1">
 				{/* Download the file */}
-				<Button disabled={upload.status !== 'success'} size="icon-sm">
-					<Download className="size-4" strokeWidth={1.5} />
-					<span className="sr-only">Download compressed image</span>
+				<Button
+					aria-disabled={upload.status !== 'success'}
+					size="icon-sm"
+					asChild
+				>
+					<a href={upload.remoteUrl} download>
+						<Download className="size-4" strokeWidth={1.5} />
+						<span className="sr-only">Download compressed image</span>
+					</a>
 				</Button>
 
 				{/* Copy the link file */}

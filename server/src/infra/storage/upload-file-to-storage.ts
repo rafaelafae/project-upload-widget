@@ -40,6 +40,7 @@ export async function uploadFileToStorage(input: UploadFileToStorageInput) {
       Bucket: env.CLOUDFLARE_BUCKET,
       Body: contentStream,
       ContentType: contentType,
+      ContentDisposition: `attachment; filename=${fileName}`
     },
   })
 
