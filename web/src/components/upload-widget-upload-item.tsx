@@ -15,6 +15,7 @@ export function UploadWidgetUploadItem({
 	upload,
 }: UploadWidgetUploadItemProps) {
 	const cancelUpload = useUploads((store) => store.cancelUpload)
+	const retryUpload = useUploads((store) => store.retryUpload)
 
 	const progress = Math.min(
 		upload.compressedSizeInBytes
@@ -36,7 +37,7 @@ export function UploadWidgetUploadItem({
 				<span className="text-xs font-medium flex items-center gap-1">
 					{/* File Name */}
 					<ImageUp className="size-3 text-zinc-300" strokeWidth={1.5} />
-					<span>{upload.name}</span>
+					<span className="max-w-[180px] truncate">{upload.name}</span>
 				</span>
 
 				<span className="text-xxs text-zinc-400 flex gap-1.5 items-center">
@@ -91,7 +92,7 @@ export function UploadWidgetUploadItem({
 				/>
 			</Progress.Root>
 
-			<div className="absolute top-2.5 right-2.5 flex items-center gap-1">
+			<div className="absolute top-2 right-2 flex items-center gap-1">
 				{/* Download the file */}
 				<Button
 					aria-disabled={upload.status !== 'success'}
@@ -119,6 +120,7 @@ export function UploadWidgetUploadItem({
 				{/* Retry to upload the file */}
 				<Button
 					disabled={!['canceled', 'error'].includes(upload.status)}
+					onClick={() => retryUpload(uploadId)}
 					size="icon-sm"
 				>
 					<RefreshCcw className="size-4" strokeWidth={1.5} />
